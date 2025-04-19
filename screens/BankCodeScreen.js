@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { db } from '../firebase/config';
+import { db } from '../utils/firebaseConfig';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
 export default function BankCodeScreen({ route, navigation }) {

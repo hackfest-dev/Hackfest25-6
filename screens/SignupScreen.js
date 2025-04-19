@@ -1,3 +1,6 @@
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../utils/firebaseConfig';
+
 import React, { useState } from 'react';
 import {
   View,
@@ -8,7 +11,7 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import { auth } from '../firebase/config';
+import { auth } from '../utils/firebaseConfig';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 export default function SignupScreen({ navigation }) {
@@ -25,11 +28,21 @@ export default function SignupScreen({ navigation }) {
       setError('Please fill in all fields including the bank code.');
       return;
     }
-
+  
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(userCredential.user, { displayName: name });
-
+      const user = userCredential.user;
+      await updateProfile(user, { displayName: name });
+  
+      // Generate a dummy wallet ID
+      const walletID = '0x' + user.uid.slice(0, 8);
+  
+      // Create wallet doc
+      await setDoc(doc(db, 'wallet', walletID), {
+        userName: name,
+        balance: 5,
+      });
+  
       setShowSuccess(true); // Show styled modal
     } catch (err) {
       console.error('Signup error:', err);
@@ -172,3 +185,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
