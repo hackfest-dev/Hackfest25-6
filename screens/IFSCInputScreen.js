@@ -5,6 +5,10 @@ export default function IFSCInputScreen({ navigation }) {
   const [ifsc, setIfsc] = useState('');
 
   const handleNext = () => {
+    if (!ifsc.trim()) {
+      alert('Input credentials'); // You can also use a Toast or Snackbar here if preferred
+      return;
+    }
     navigation.navigate('BankCode', { ifsc });
   };
 

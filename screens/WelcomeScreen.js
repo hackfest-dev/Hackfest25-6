@@ -1,10 +1,16 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Image} from 'react-native';
 
 export default function WelcomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome</Text>
+      <Image 
+        source={require('../assets/lo.png')} 
+        style={styles.logo} 
+      />
+      <Text style={styles.welcomeText}>Welcome</Text>
+    
 
       <TouchableOpacity
         style={styles.button}
@@ -30,6 +36,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    marginBottom: 20,
   },
   title: {
     fontSize: 28,
